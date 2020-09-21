@@ -72,15 +72,20 @@ public class App extends JFrame implements Observer {
         Connect_b.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 connect_port = Integer.parseInt(Port_input.getText());
-                System.out.println(connect_port);
+                if (connect_port != 0) {
+                    Chat_output.append("Connected"+"\n");
+                }else{
+                    JOptionPane.showMessageDialog(panelMain,"Please write a port");
+                }
             }
         });
         Disconnect_b.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println(connect_port);
+                connect_port = 0;
+                Port_input.setText("");
+                Chat_output.setText("");
             }
         });
     }
@@ -96,7 +101,7 @@ public class App extends JFrame implements Observer {
                 App ChatAPP = new App();
                 ChatAPP.setVisible(true);
                 ChatAPP.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                ChatAPP.setSize(800,400);
+                ChatAPP.setSize(400,400);
 
             }
         });

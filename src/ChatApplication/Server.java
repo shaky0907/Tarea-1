@@ -20,7 +20,7 @@ public class Server extends Observable implements Runnable {
     @Override
     public void run() {
         ServerSocket server = null;
-        Socket client;
+        Socket client = null;
         DataInputStream in;
 
         try{
@@ -38,7 +38,7 @@ public class Server extends Observable implements Runnable {
                 this.notifyObservers(msg);
                 this.clearChanged();
 
-                server.close();
+                client.close();
 
             }
 

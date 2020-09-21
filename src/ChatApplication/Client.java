@@ -11,8 +11,10 @@ public class Client implements Runnable {
 
 
 
-    private int port;
+    int port;
     String msg;
+
+
 
     public Client(int port,String msg){
         this.port = port;
@@ -33,6 +35,7 @@ public class Client implements Runnable {
             out.writeUTF(msg);
 
             client.close();
+
 
 
         }catch (IOException ex){
