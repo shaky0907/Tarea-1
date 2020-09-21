@@ -1,0 +1,60 @@
+package ChatApplication;
+
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Observable;
+import java.util.Random;
+
+public class Server extends Observable implements Runnable {
+
+    int port;
+
+    public Server(){
+        this.port = port_seacrh();
+    }
+
+
+
+    @Override
+    public void run() {
+        ServerSocket server = null;
+        Socket client;
+        DataInputStream in;
+
+        try{
+            server = new ServerSocket(port);
+
+            while(true){
+
+                client = server.accept();
+
+                in = new DataInputStream(client.getInputStream());
+
+                String msg = in.readUTF();
+
+                this.setChanged();
+                this.notifyObservers(msg);
+                this.clearChanged();
+
+                server.close();
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            port_seacrh();
+        }
+    }
+
+
+    public static int port_seacrh(){
+        Random port_r = new Random();
+        int port = 0;
+        while(port < 1000){
+            port = port_r.nextInt(6000);
+        }
+        return port;
+    }
+}
