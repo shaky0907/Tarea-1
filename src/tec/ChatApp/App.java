@@ -1,4 +1,4 @@
-package ChatApplication;
+package tec.ChatApp;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -21,14 +21,13 @@ public class App extends JFrame implements Observer {
     private JLabel Name_label;
     private JTextField Your_port;
     private Server server;
-    private Client client;
     int port;
     int connect_port = 0;
 
 
     public App() {
+
         add(panelMain);
-        search_port();
 
         server = new Server();
         port = server.port;
@@ -41,6 +40,7 @@ public class App extends JFrame implements Observer {
         Send_b.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 String msg = Chat_input.getText();
                 String name = Name_input.getText();
                 String msg_send= name+":"+msg+"\n";
@@ -51,10 +51,9 @@ public class App extends JFrame implements Observer {
                             Chat_output.append(msg_send);
                             Chat_input.setText("");
 
-                            client = new Client(connect_port,msg_send);
+                            Client client = new Client(connect_port,msg_send);
                             Thread t = new Thread(client);
                             t.start();
-
                         }else{
                             JOptionPane.showMessageDialog(null, "Please write a port!");
                         }
@@ -74,7 +73,12 @@ public class App extends JFrame implements Observer {
             public void actionPerformed(ActionEvent e) {
                 connect_port = Integer.parseInt(Port_input.getText());
                 if (connect_port != 0) {
-                    Chat_output.append("Connected"+"\n");
+                    Chat_output.append("Connected to :"+connect_port+"\n");
+                    Chat_input.setText("");
+
+                    Client client = new Client(connect_port,Name_input.getText()+" "+"Connected\n");
+                    Thread t = new Thread(client);
+                    t.start();
                 }else{
                     JOptionPane.showMessageDialog(panelMain,"Please write a port");
                 }
@@ -83,9 +87,17 @@ public class App extends JFrame implements Observer {
         Disconnect_b.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                connect_port = 0;
+
                 Port_input.setText("");
-                Chat_output.setText("");
+                Chat_output.setText("Disconnected\n");
+                Chat_input.setText("");
+
+                Client client = new Client(connect_port,Name_input.getText()+" "+"disconnected\n");
+                Thread t = new Thread(client);
+                t.start();
+
+                connect_port = 0;
+
             }
         });
     }
@@ -102,12 +114,11 @@ public class App extends JFrame implements Observer {
                 ChatAPP.setVisible(true);
                 ChatAPP.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 ChatAPP.setSize(400,400);
-
+                ChatAPP.setResizable(false);
             }
         });
 
     }
-
 
     @Override
     public void update(Observable o, Object arg) {
@@ -115,11 +126,4 @@ public class App extends JFrame implements Observer {
 
     }
 
-    public void search_port(){
-        Random port_r = new Random();
-        while(port < 1000){
-            port = port_r.nextInt(6000);
-        }
-
-    }
 }

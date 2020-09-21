@@ -1,4 +1,4 @@
-package ChatApplication;
+package tec.ChatApp;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -7,16 +7,25 @@ import java.net.Socket;
 import java.util.Observable;
 import java.util.Random;
 
+/**
+ *
+ */
 public class Server extends Observable implements Runnable {
-
+    /**
+     *
+     */
     int port;
 
+    /**
+     *Constructor
+     */
     public Server(){
         this.port = port_seacrh();
     }
 
-
-
+    /**
+     *
+     */
     @Override
     public void run() {
         ServerSocket server = null;
@@ -24,7 +33,7 @@ public class Server extends Observable implements Runnable {
         DataInputStream in;
 
         try{
-            server = new ServerSocket(port);
+            server = new ServerSocket(this.port);
 
             while(true){
 
@@ -41,14 +50,16 @@ public class Server extends Observable implements Runnable {
                 client.close();
 
             }
-
         } catch (IOException e) {
             e.printStackTrace();
-            port_seacrh();
+            this.port = port_seacrh();
         }
     }
 
-
+    /**
+     *
+     * @return
+     */
     public static int port_seacrh(){
         Random port_r = new Random();
         int port = 0;

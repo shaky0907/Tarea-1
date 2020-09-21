@@ -1,6 +1,5 @@
-package ChatApplication;
+package tec.ChatApp;
 
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -9,12 +8,8 @@ import java.util.logging.Logger;
 
 public class Client implements Runnable {
 
-
-
     int port;
     String msg;
-
-
 
     public Client(int port,String msg){
         this.port = port;
@@ -35,8 +30,6 @@ public class Client implements Runnable {
             out.writeUTF(msg);
 
             client.close();
-
-
 
         }catch (IOException ex){
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE,null, ex);
