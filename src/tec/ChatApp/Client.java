@@ -14,6 +14,9 @@ import java.util.logging.Logger;
  */
 public class Client implements Runnable {
     //atributos
+    /**
+     * port es puerto de cliente y msg el mensaje.
+     */
     int port;
     String msg;
 
@@ -28,6 +31,9 @@ public class Client implements Runnable {
     }
 
 
+    /**
+     * Se encarga de mandar el mensaje al cliente con el puerto elegido.
+     */
     @Override
     public void run() {
         final String Host = "127.0.0.1";// host ip

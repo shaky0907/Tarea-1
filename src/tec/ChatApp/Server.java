@@ -16,6 +16,9 @@ import java.util.Random;
 public class Server extends Observable implements Runnable {
 
     //atributos
+    /**
+     * port es el puerto del servidor.
+     */
     int port; // puerto que el servidor va a utilizar
 
     /**
@@ -25,7 +28,9 @@ public class Server extends Observable implements Runnable {
         this.port = port_seacrh();
     }
 
-
+    /**
+     * Se encarga correr el servidor y estar esperando por algun input.
+     */
     @Override
     public void run() {
         //instanciar clases necesarias

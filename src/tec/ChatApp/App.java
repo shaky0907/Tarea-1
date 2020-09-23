@@ -137,10 +137,10 @@ public class App extends JFrame implements Observer {
     /**
      * main() method donde crea la instancia de la ventana.
      * @param args guarda los command line arguments para el programa.
-     * @throws ClassNotFoundException
-     * @throws IllegalAccessException
-     * @throws UnsupportedLookAndFeelException
-     * @throws InstantiationException
+     * @throws ClassNotFoundException En caso de que no encuentre la clase
+     * @throws IllegalAccessException Illigal Access Exception
+     * @throws UnsupportedLookAndFeelException UnsupportedLookAndFeelException
+     * @throws InstantiationException InstantiationException
      */
     public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException, UnsupportedLookAndFeelException, InstantiationException {
 
