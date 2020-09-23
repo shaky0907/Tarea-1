@@ -8,62 +8,65 @@ import java.util.Observable;
 import java.util.Random;
 
 /**
- *
+ * Esta clase se encarga de implementar el servidor para recibir los mensajes de los clientes.
+ * @author David
+ * @see java.lang.Runnable
+ * @see java.util.Observable
  */
 public class Server extends Observable implements Runnable {
-    /**
-     *
-     */
-    int port;
+
+    //atributos
+    int port; // puerto que el servidor va a utilizar
 
     /**
-     *Constructor
+     *Constructor del servidor donde crea un puerto random
      */
     public Server(){
         this.port = port_seacrh();
     }
 
-    /**
-     *
-     */
+
     @Override
     public void run() {
+        //instanciar clases necesarias
         ServerSocket server = null;
         Socket client = null;
         DataInputStream in;
 
+        //try para prevenir problemas con la creacion del server socket
         try{
-            server = new ServerSocket(this.port);
 
-            while(true){
+            server = new ServerSocket(this.port);//create server socket
 
-                client = server.accept();
+            while(true){ // loop para tener el server corriendo
 
-                in = new DataInputStream(client.getInputStream());
+                client = server.accept();// accept client input
 
-                String msg = in.readUTF();
+                in = new DataInputStream(client.getInputStream());// create DataInputStream
+
+                String msg = in.readUTF();//read message to send to client
 
                 this.setChanged();
-                this.notifyObservers(msg);
-                this.clearChanged();
+                this.notifyObservers(msg);//notify observers(client)
+                this.clearChanged();// clear
 
-                client.close();
+                client.close();// close client
 
             }
         } catch (IOException e) {
             e.printStackTrace();
-            this.port = port_seacrh();
+            port = port_seacrh();// busca otro puerto que no este ocupado
         }
     }
 
     /**
-     *
-     * @return
+     * Se encarga de buscar un puerto para el server
+     * @return port random num entre 1000  y 6000
      */
     public static int port_seacrh(){
-        Random port_r = new Random();
+        Random port_r = new Random();// create random class
         int port = 0;
-        while(port < 1000){
+        while(port < 1500){ // buscar port hasta que sea mayor que 1500
             port = port_r.nextInt(6000);
         }
         return port;

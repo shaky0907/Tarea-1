@@ -5,9 +5,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Random;
 
-
+/**
+ * Esta clase se encarga de implementar la ventana donde el cliente.
+ * puede interactuar y realizar sus acciones.
+ * @author David
+ * @see javax.swing.JFrame
+ * @see java.util.Observer
+ * @see java.awt.Component
+ * @see java.awt.Container
+ * @see java.awt.Frame
+ * @see java.awt.image.ImageObserver
+ * @see java.awt.MenuContainer
+ * @see java.awt.Window
+ * @see java.io.Serializable
+ * @see javax.accessibility.Accessible
+ * @see javax.swing.RootPaneContainer
+ * @see javax.swing.WindowConstants
+ *
+ */
 public class App extends JFrame implements Observer {
     private JTextArea Chat_output;
     private JPanel panelMain;
@@ -20,16 +36,19 @@ public class App extends JFrame implements Observer {
     private JTextField Name_input;
     private JLabel Name_label;
     private JTextField Your_port;
-    private Server server;
     int port;
     int connect_port = 0;
 
-
+    /**
+     * Contructor de App donde añade todos los widgets de swing
+     * y instancia al servidor.
+     * Tambien se encarga de los Actionlistener para los botones.
+     */
     public App() {
 
         add(panelMain);
 
-        server = new Server();
+        Server server = new Server();
         port = server.port;
         server.addObserver(this);
         Thread t = new Thread(server);
@@ -37,6 +56,10 @@ public class App extends JFrame implements Observer {
 
         Your_port.setText(String.valueOf(port));
 
+        /*
+        Listener de Send_b
+        Se encarga de mandar el mensaje al puerto deseado
+         */
         Send_b.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -54,6 +77,7 @@ public class App extends JFrame implements Observer {
                             Client client = new Client(connect_port,msg_send);
                             Thread t = new Thread(client);
                             t.start();
+
                         }else{
                             JOptionPane.showMessageDialog(null, "Please write a port!");
                         }
@@ -67,7 +91,10 @@ public class App extends JFrame implements Observer {
             }
 
         });
-
+        /*
+        Listener de Connect_b
+        Se encarga de registrar el puerto a donde se quiere mandar
+         */
         Connect_b.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -84,6 +111,11 @@ public class App extends JFrame implements Observer {
                 }
             }
         });
+
+        /*
+        Listener de Disconnect_b
+        Se encarga de "desconectar" al cliente del otro
+         */
         Disconnect_b.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -102,7 +134,14 @@ public class App extends JFrame implements Observer {
         });
     }
 
-
+    /**
+     * main() method donde crea la instancia de la ventana.
+     * @param args guarda los command line arguments para el programa.
+     * @throws ClassNotFoundException
+     * @throws IllegalAccessException
+     * @throws UnsupportedLookAndFeelException
+     * @throws InstantiationException
+     */
     public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException, UnsupportedLookAndFeelException, InstantiationException {
 
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
